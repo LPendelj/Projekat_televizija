@@ -1,6 +1,7 @@
 package main;
 
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import util.UserRepository;
@@ -13,7 +14,7 @@ public class Main {
 	
 	public static Scanner sc = new Scanner(System.in);
 	
-	public static void login() {
+	public static void login(UserRepository repo) {
 		System.out.println("Unesite korisnicko ime:");
 		
 		boolean korekt = false;
@@ -25,8 +26,6 @@ public class Main {
 		
 		String pass = sc.nextLine();
 		
-		
-		UserRepository repo = new UserRepository();
 		if(repo.getUserByUsername(user) == null) {
 			System.out.println("user or password are not correct");
 		} else {
@@ -39,7 +38,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		User startingUser = new User("Luka", "Pendelj", "luka", "luka123", Role.ADMIN);
-		// UserRepository userRepository = new UserRepository(new ArrayList<User>());
+		 UserRepository userRepository = new UserRepository(new ArrayList<User>());
 		// userRepository.add(startingUser);
 		// login();
 	}
