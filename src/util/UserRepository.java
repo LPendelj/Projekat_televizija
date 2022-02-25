@@ -18,30 +18,27 @@ public class UserRepository implements Repository {
 
 	@Override
 	public void save(User user) {
-		// TODO Auto-generated method stub
+		lista.add(user);
 		
 	}
 
 	@Override
-	public User get() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<User> getAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public User getUserByUsername(String username) {
+	public User get(String username) {
 		for(User u : lista) {
 			if(u.getUserName().equals(username)) {
 				return u;
 			}
 		}
-		
+		//throw new Exception("User is not availible");
 		return null;
 	}
+	
+
+	@Override
+	public List<User> getAll() {
+		return this.lista;
+	}
+
+		
 
 }

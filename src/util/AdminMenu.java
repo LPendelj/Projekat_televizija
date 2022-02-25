@@ -19,12 +19,14 @@ public class AdminMenu {
 	}
 
 	public void startAdminMenu() {
-		int decision = 0;
+		System.out.println("Admin meni je startovao");
+		
+		int decision = -1;
 		while (decision != 0) {
 			showConsole();
 			decision = scanner.nextInt();
-			// scanner.nextLine();
-			// mozda treba dodati ovo da bi ocistio enter posle unosa int
+			 scanner.nextLine();
+			// mozda treba dodati ovo da bi ocistio enter posle unosa int - DODATO
 			switch (decision) {
 			case 1:
 				enterNewUser();
@@ -52,6 +54,8 @@ public class AdminMenu {
 	}
 
 	private void showConsole() {
+		System.out.println();
+		System.out.println("-----------------------------------------");
 		System.out.println("1. Unos novog korisnika");
 		System.out.println("2. Prikazi sve korisnike");
 		System.out.println("3. Prikaz korisnika");
@@ -73,16 +77,15 @@ public class AdminMenu {
 		// mozda treba samo ubaciti funkcionalnost getUserByUsername(userName) metode u
 		// get() metodu
 		// i dodati parametar String userName u nju, da bude get(String userName);
-		// da ne bismo morali da radimo ovo castovanje
-		User userToChange = ((UserRepository) repo).getUserByUsername(userName);
+		// da ne bismo morali da radimo ovo castovanje - ISPRAVLJENO
+		User userToChange = repo.get(userName);
 		System.out.println("Staro ime korisnika:" + userToChange.getFirstName() + "Unesite novo ime korisnika:");
 		String firstName = scanner.nextLine();
 		System.out.println("Staro prezime korisnika:" + userToChange.getLastName() + "Unesite novo prezime korisnika:");
 		String lastName = scanner.nextLine();
 		// ako treba menjati i username treba odraditi proveru da li postoji korisnik s
 		// tim username
-		System.out
-				.println("Stari username korisnika:" + userToChange.getUserName() + "Unesite novi username korisnika:");
+		System.out.println("Stari username korisnika:" + userToChange.getUserName() + "Unesite novi username korisnika:");
 		String newUserName = scanner.nextLine();
 		System.out.println("Stara uloga korisnika:" + userToChange.getRole() + "Unesite novu ulogu korisnika:");
 		String role = scanner.nextLine();
@@ -95,7 +98,7 @@ public class AdminMenu {
 	private void showUser() {
 		System.out.println("Prikaz korisnika, unesite username:");
 		String userName = scanner.nextLine();
-		User user = ((UserRepository) repo).getUserByUsername(userName);
+		User user = repo.get(userName);
 		System.out.println(user);
 	}
 
@@ -158,7 +161,7 @@ public class AdminMenu {
 
 	private boolean checkUserName(String userName) {
 		boolean userNameOK = false;
-		if (((UserRepository) repo).getUserByUsername(userName) == null)
+		if (repo.get(userName) == null)
 			userNameOK = true;
 		return userNameOK;
 	}

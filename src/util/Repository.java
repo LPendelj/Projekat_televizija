@@ -6,6 +6,7 @@ import model.User;
 
 public interface Repository {
 	public void save(User user);
-	public User get();
+	public User get(String username);
 	public List<User> getAll();
+	
 }
