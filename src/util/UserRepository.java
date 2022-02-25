@@ -8,7 +8,14 @@ import model.User;
 public class UserRepository implements Repository {
 
 	 List<User> lista;
+	 
+	 
 	
+	public UserRepository(List<User> lista) {
+		super();
+		this.lista = lista;
+	}
+
 	@Override
 	public void save(User user) {
 		// TODO Auto-generated method stub
