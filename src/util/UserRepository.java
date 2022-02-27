@@ -1,11 +1,10 @@
 package util;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import model.User;
 
-public class UserRepository implements Repository {
+public class UserRepository implements Repository<User> {
 
 	 List<User> lista;
 	 
@@ -16,11 +15,12 @@ public class UserRepository implements Repository {
 		this.lista = lista;
 	}
 
-	@Override
-	public void save(User user) {
-		lista.add(user);
-		
-	}
+	/*
+	 * @Override public void save(T t) {
+	 * 
+	 * 
+	 * }
+	 */
 
 	@Override
 	public User get(String username) {
@@ -37,6 +37,25 @@ public class UserRepository implements Repository {
 	@Override
 	public List<User> getAll() {
 		return this.lista;
+	}
+
+	
+	public void save(User u) {
+		lista.add(u);
+		
+	}
+	
+	public boolean deleteUser(String s) {
+		for(User t:lista) {
+			if(t.getUserName().equals(s)) {
+				lista.remove(t);
+				return true;
+			}
+			
+		}
+		
+		return false;
+		
 	}
 
 		

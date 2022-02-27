@@ -7,11 +7,11 @@ import model.User;
 //TODO treba uraditi provere kad god ima neki unos
 
 public class AdminMenu {
-	private final Repository repo;
+	private final Repository<User> repo;
 	private final User currentUser;
 	private final Scanner scanner;
 
-	public AdminMenu(Repository repo, Scanner scanner, User currentUser) {
+	public AdminMenu(Repository<User> repo, Scanner scanner, User currentUser) {
 		super();
 		this.scanner = scanner;
 		this.repo = repo;
@@ -67,7 +67,10 @@ public class AdminMenu {
 		System.out.println("Brisanje korisnika");
 		System.out.println("Unesite username korisnika kog zelite da izbrisete");
 		String userName = scanner.nextLine();
-		// repo.deleteUser(userName); //implementirati metodu delete
+		if(repo.deleteUser(userName)) {
+			System.out.println("Korisnik " + userName + " je obrisan.");
+		} else System.out.println("Korisnik sa tim korisnickim imenom ne postoji.");; //implementirati metodu delete
+		
 	}
 
 	private void changeUser() {
@@ -78,7 +81,7 @@ public class AdminMenu {
 		// get() metodu
 		// i dodati parametar String userName u nju, da bude get(String userName);
 		// da ne bismo morali da radimo ovo castovanje - ISPRAVLJENO
-		User userToChange = repo.get(userName);
+		User userToChange =  repo.get(userName);
 		System.out.println("Staro ime korisnika:" + userToChange.getFirstName() + "Unesite novo ime korisnika:");
 		String firstName = scanner.nextLine();
 		System.out.println("Staro prezime korisnika:" + userToChange.getLastName() + "Unesite novo prezime korisnika:");
@@ -89,7 +92,7 @@ public class AdminMenu {
 		String newUserName = scanner.nextLine();
 		System.out.println("Stara uloga korisnika:" + userToChange.getRole() + "Unesite novu ulogu korisnika:");
 		String role = scanner.nextLine();
-		Role newRole = role.equals(Role.ADMIN) ? Role.ADMIN : Role.EDITOR;
+		Role newRole = role.equals("ADMIN") ? Role.ADMIN : Role.EDITOR; // izmenjen upit tako da se poredi sa Stringom.
 		// mozda dodati novu metodu za update(User user), u suprotnom moze save da se
 		// odradi tako da radi i kao save i kao update
 		repo.save(new User(firstName, lastName, newUserName, userToChange.getPassword(), newRole));
@@ -98,14 +101,14 @@ public class AdminMenu {
 	private void showUser() {
 		System.out.println("Prikaz korisnika, unesite username:");
 		String userName = scanner.nextLine();
-		User user = repo.get(userName);
-		System.out.println(user);
+		User t =  repo.get(userName);
+		System.out.println(t);
 	}
 
 	private void showAllUsers() {
 		System.out.println("Prikaz svih korisnika:");
-		List<User> users = repo.getAll();
-		for (User u : users) {
+		List<User> ts = repo.getAll();
+		for (User u : ts) {
 			System.out.println(u);
 		}
 	}
@@ -141,7 +144,7 @@ public class AdminMenu {
 
 		System.out.println("Unesite ulogu korisnika:");
 		String role = scanner.nextLine();
-		Role newRole = role.equals(Role.ADMIN) ? Role.ADMIN : Role.EDITOR;
+		Role newRole = role.equals("ADMIN") ? Role.ADMIN : Role.EDITOR;
 		repo.save(new User(firstName, lastName, userName, password, newRole));
 	}
 
